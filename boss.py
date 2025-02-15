@@ -80,6 +80,9 @@ def process_first_item(driver: WebDriver):
 
             print(f"{name} {job} 求简历 发送成功")
 
+            print(f"wait 1m")
+            time.sleep(60)
+
             delete_item(driver)
                 
 
@@ -101,7 +104,8 @@ def main():
                 if err_count >= 3:
                     raise e
 
-            time.sleep(10)
+            print(f"wait 10m")
+            time.sleep(600)
         
     run_in_browser(browser, profile, fn, kill_browser_before_running=True)
 

@@ -2,22 +2,8 @@ logs/
 .venv/
 __pycache__/
 
-# Private config
-accounts.yml
 dist/
-*.spec
-license-server/data/license.db
 
 *.log
 
-run_result_*.json
-twitter*.json
-facebook*.json
-
-data/*
-!data/article_collector/
-!data/mp_publish/
-
-screenshots/
-
-ai_media_article_refer_*.txt
+*.exe

@@ -36,9 +36,12 @@ class Edge(Browser):
         if self._browser_path:
             return self._browser_path
 
-        return os.path.expandvars(
-            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
-        )
+        if is_windows():
+            return "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+        else:
+            return os.path.expandvars(
+                "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
+            )
 
     def start(self, profile: str, port: int = 9777, headless: bool = False):
         cmd = [
@@ -74,7 +77,7 @@ class Edge(Browser):
     def is_running(self):
         try:
             if is_windows():
-                cmd = 'tasklist /FI "IMAGENAME eq edge.exe" /NH'
+                cmd = 'tasklist /FI "IMAGENAME eq msedge.exe" /NH'
                 output = subprocess.run(cmd, capture_output=True, text=True, shell=True)
                 return "edge.exe" in output.stdout
             else:
@@ -96,7 +99,7 @@ class Edge(Browser):
         try:
             if is_windows():
                 subprocess.run(
-                    ["taskkill", "/F", "/IM", "edge.exe"],
+                    ["taskkill", "/F", "/IM", "msedge.exe"],
                     capture_output=True,
                     check=False,
                 )
@@ -120,7 +123,7 @@ class Edge(Browser):
     def get_driver(self, port: int):
         download_url = "https://developer.microsoft.com/zh-cn/microsoft-edge/tools/webdriver/?form=MA13LH"
 
-        driver_path = "/usr/local/bin/msedgedriver"
+        driver_path = "./msedgedriver.exe"
         if not os.path.exists(driver_path):
             raise FileNotFoundError(
                 f"msedgedriver not found at {driver_path}, please download from {download_url}"
